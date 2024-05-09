@@ -1,15 +1,16 @@
-let currentTask = 1
-let currentLevel = 0
+let taskQue = 1
+let levelQue = 1
+
+let currentTask = ''
 
 let task = {}
 
 let startTaskExe = false
-let nextTask = false
+let nextTask = true
 
 function createTask (id, type, objectName, objectVariable, amount, messageCompl, messageFail, time) {
     task[id] = {
         type : type,
-        placement : placement,
         objectName : objectName,
         objectVariable : objectVariable,
         amount : amount,
@@ -20,6 +21,8 @@ function createTask (id, type, objectName, objectVariable, amount, messageCompl,
         taskComplete : false,
         taskFailed : false
     }
+    currentTask = id
+
     timeThen = seconds
     timeTrack = 0
 }
@@ -48,7 +51,7 @@ function gressusTask(id, byWhat, moral) {
     } 
 }
 
-function checkTask() {
+function checkTask(id) {
     switch (task[id].type) {
         case 1:
             //Fetch quest
@@ -110,24 +113,45 @@ function removeTaskes() {
 //[messageCompl] = string   [messageFail] = string   [time] = value
 //Types:    1 is fetch quest    2 is timed fetch quest
 function executeTaskes() {
+    // console.log()
 
-    if (startTaskExe) {
-        if (nextTask) {
+    if (!startTaskExe) {
+        return
+    }
+    if (nextTask) {
 
-            switch (currentLevel) {
+        if (opacityTask > 0) {
+            opacityTask -= opacityChangeSpeed
+        } else {
+            opacityTask = 0
+
+            switch (levelQue) {
                 case 1:
 
-                    switch (currentTask) {
+                    switch (taskQue) {
                         case 1:
                             //example
                             createTask("can", 1, "Pie", 0, 3, "hurray", "nay")
+                            break
+                        case 2:
+                            //example
+                            createTask('trauck', 1, 'sea', 0, 4, 'blanc', 'french')
+                            break
                     }
             }
 
-            ++currentTask
+            updateTask(currentTask)
+            ++taskQue
             nextTask = false
+        }
+    } else {
+        if (opacityTask >= opacityFadeInTime + 120) {
+            opacityTask = opacityFadeInTime + 120
+
+            checkTask(currentTask)
+            updateTask(currentTask)
         } else {
-            checkTask()
+            opacityTask += opacityChangeSpeed
         }
     }
 }

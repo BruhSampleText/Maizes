@@ -29,8 +29,9 @@ let opacitySide = 0
 let opacityChangeSpeed = 1.5
 let opacityFadeInTime = 60
 let opacityV = 0
+let opacityTask = 0
 
-let shortSide = 'Find my bolts'
+let shortSide = ''
 let fullSide = ''
 
 let resetSeconds = false
@@ -114,25 +115,9 @@ function updateTopBar(dt) {
 
 function updateSideBar(dt) {
 
-    if (hasChangedSide) {
-        if (opacitySide >= opacityFadeInTime + 100) {
-            if (showWhatsHidden) {
-                hasChangedSide = false
-            }
-            opacitySide = opacityFadeInTime + 100
-        } else {
-            opacitySide += opacityChangeSpeed
-        }
-    } else {
-        if (opacitySide <= 0) {
-            opacitySide = 0
-        }
-        else {
-            opacitySide -= opacityChangeSpeed
-        }
-    }
+    executeTaskes()
 
-
+    shortHand.style.opacity = `${opacityTask}%`
     fullHand.style.opacity = `${opacitySide}%`
 
     shortHand.innerHTML = `${shortSide}`
@@ -141,6 +126,7 @@ function updateSideBar(dt) {
 
 
 updateWindows = (dt) => {
+
     if (showWhatsHidden) {
         hasChangedTop = true
         hasChangedSide = true

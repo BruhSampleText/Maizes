@@ -1,13 +1,9 @@
-let id = 0
-let getId = () => { id++; return id }
-
 let allEnities = {}
+let entityConstructors = {}
 
-let loadLevelsEntites = () => {
+let loadLevelsEntites = (  ) => {
 
 }
 let dropLevelsEntites = () => {
-    allEnities.forEach(element => {
-        element.deconstructor()
-    });
+    
 }

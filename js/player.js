@@ -10,7 +10,8 @@ let approximateGround = 4
 let hasJumped = false
 
 let playerFlags = {
-  noclip: false
+  noclip: false,
+  alive: false,
 }
 
 let collisionCheck = ( mapObj ) => {
@@ -102,3 +103,11 @@ updatePlayer = ( dt ) => {
     fixRotationVector( playerRotation )
     world.style.transform = "translateZ( 600px )" + getTransform( playerPosition, playerRotation )
 }
+
+subscribe( "spawn player", ( position ) => {
+  playerPosition = position
+  playerFlags.alive = true
+} )
+subscribe( "on player death", () => {
+
+} )

@@ -1,4 +1,5 @@
 let last = performance.now()
+let gameLoop = false
 
 function game() {
     let current = performance.now()
@@ -9,14 +10,25 @@ function game() {
         dt = 1
     }
 
+    if ( keymap.KeyEscape ) {
+        publish( "stop game" )
+        return
+    }
+
     updatePlayer( dt )
     updateWindows( dt )
     request = requestAnimationFrame( game )
 }
 
-window.onload = () => {
-    // loadNewWorld( devLevel.geometry )
+subscribe( "startgame", () => {
+
     loadLevel( "peat" )
-  
+
+    publish( "spawn player", vec3( 0, 0, 0 ) )
+
     game()
+} )
+
+window.onload = () => {
+    publish( "startgame" )
 }

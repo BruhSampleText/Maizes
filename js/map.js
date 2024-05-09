@@ -64,6 +64,8 @@ let loadLevel = ( levelName ) => {
 
     currentLevelGeo = level.geometry
 
+    dropLevelsEntites()
     unloadWorld()
     loadNewWorld( currentLevelGeo )
+    loadLevelsEntites( level.entites )
 }
